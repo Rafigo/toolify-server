@@ -5,7 +5,7 @@ import { EnumPlanningPokerStatus } from "../enum/planning-poker.enum";
 @Entity("planning_poker")
 export class PlanningPokerEntity extends TimestampEntity {
   @PrimaryGeneratedColumn("uuid")
-  id: number;
+  id: string;
 
   @Column({ type: "varchar", length: 255 })
   title: string;

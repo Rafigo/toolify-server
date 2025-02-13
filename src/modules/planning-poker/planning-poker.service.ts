@@ -15,20 +15,37 @@ export class PlanningPokerService {
     private planningPokerRepository: Repository<PlanningPokerEntity>,
   ) {}
 
+  async findAll(): Promise<PlanningPokerEntity[]> {
+    const entities = await this.planningPokerRepository.find();
+    return entities.map((entity) => ({
+      ...entity,
+    }));
+  }
+
+  async findOne(id: string): Promise<PlanningPokerEntity> {
+    return this.planningPokerRepository.findOne({ where: { id } });
+  }
+
   async create(
     createPlanningPokerDto: CreatePlanningPokerDto,
-  ): Promise<GetPlanningPokerDto> {
+  ): Promise<PlanningPokerEntity> {
     return await this.planningPokerRepository.save({
       ...createPlanningPokerDto,
       sessionUrl: "xxx-yyy-zzz",
     });
   }
 
-  async findAll(): Promise<GetPlanningPokerDto[]> {
-    const entities = await this.planningPokerRepository.find();
-    return entities.map((entity) => ({
-      ...entity,
-      status: entity.status as EnumPlanningPokerStatus,
-    }));
+  // Mettre à jour un PlanningPoker
+  async update(
+    id: string,
+    updatePlanningPokerDto: PlanningPokerEntity,
+  ): Promise<PlanningPokerEntity> {
+    await this.planningPokerRepository.update(id, updatePlanningPokerDto);
+    return this.planningPokerRepository.findOne({ where: { id } });
+  }
+
+  // Supprimer un PlanningPoker
+  async remove(id: string): Promise<void> {
+    await this.planningPokerRepository.delete(id);
   }
 }

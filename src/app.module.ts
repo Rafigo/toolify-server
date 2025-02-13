@@ -29,7 +29,7 @@ import { APP_GUARD } from "@nestjs/core";
         port: 5432,
         database: "toolify-db",
         username: "postgres",
-        password: "admin",
+        password: "postgres",
         logging: true,
       }),
     }),

@@ -1,9 +1,13 @@
 import { IsArray, IsEnum, IsOptional, IsString } from "class-validator";
 import { PartialType } from "@nestjs/mapped-types";
 import { EnumPlanningPokerStatus } from "../enum/planning-poker.enum";
+import { PrimaryGeneratedColumn } from "typeorm";
 
 // When getting planning poker object
 export class GetPlanningPokerDto {
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+
   @IsString()
   title: string;
 
