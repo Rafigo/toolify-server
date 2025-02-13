@@ -1,0 +1,9 @@
+GET http://localhost:3000/accounts/36
+
+GET http://localhost:3000/accounts/toto
+
+GET http://localhost:3000/accounts
+
+GET http://localhost:3000/accounts?email=raffi.toto@sogeti.com
+
+GET http://localhost:3000
