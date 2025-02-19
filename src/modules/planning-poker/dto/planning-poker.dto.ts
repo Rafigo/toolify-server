@@ -47,4 +47,7 @@ export class CreatePlanningPokerDto {
 // When updating planning poker
 export class UpdatePlanningPokerDto extends PartialType(
   CreatePlanningPokerDto,
-) {}
+) {
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+}

@@ -4,9 +4,8 @@ import { Repository } from "typeorm";
 import { PlanningPokerEntity } from "./entities/planning-poker.entity";
 import {
   CreatePlanningPokerDto,
-  GetPlanningPokerDto,
+  UpdatePlanningPokerDto,
 } from "./dto/planning-poker.dto";
-import { EnumPlanningPokerStatus } from "./enum/planning-poker.enum";
 
 @Injectable()
 export class PlanningPokerService {
@@ -23,7 +22,10 @@ export class PlanningPokerService {
   }
 
   async findOne(id: string): Promise<PlanningPokerEntity> {
-    return this.planningPokerRepository.findOne({ where: { id } });
+    return this.planningPokerRepository.findOne({
+      where: { id },
+      relations: { userStories: true },
+    });
   }
 
   async create(
@@ -37,11 +39,15 @@ export class PlanningPokerService {
 
   // Mettre à jour un PlanningPoker
   async update(
-    id: string,
-    updatePlanningPokerDto: PlanningPokerEntity,
+    updatePlanningPokerDto: UpdatePlanningPokerDto,
   ): Promise<PlanningPokerEntity> {
-    await this.planningPokerRepository.update(id, updatePlanningPokerDto);
-    return this.planningPokerRepository.findOne({ where: { id } });
+    await this.planningPokerRepository.update(
+      updatePlanningPokerDto.id,
+      updatePlanningPokerDto,
+    );
+    return this.planningPokerRepository.findOne({
+      where: { id: updatePlanningPokerDto.id },
+    });
   }
 
   // Supprimer un PlanningPoker

@@ -1,6 +1,5 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { AccountsModule } from "@/modules/accounts/accounts.module";
 import { PlanningPokerModule } from "@/modules/planning-poker/planning-poker.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
@@ -13,11 +12,12 @@ import {
   TokenValidation,
 } from "nest-keycloak-connect";
 import { APP_GUARD } from "@nestjs/core";
+import { UserStoryModule } from "./modules/user-story/user-story.module";
 
 @Module({
   imports: [
-    AccountsModule,
     PlanningPokerModule,
+    UserStoryModule,
     TypeOrmModule.forRootAsync({
       imports: [],
       inject: [],
@@ -29,7 +29,7 @@ import { APP_GUARD } from "@nestjs/core";
         port: 5432,
         database: "toolify-db",
         username: "postgres",
-        password: "postgres",
+        password: "admin",
         logging: true,
       }),
     }),

@@ -8,7 +8,10 @@ import {
   Delete,
 } from "@nestjs/common";
 import { PlanningPokerService } from "./planning-poker.service";
-import { CreatePlanningPokerDto } from "./dto/planning-poker.dto";
+import {
+  CreatePlanningPokerDto,
+  UpdatePlanningPokerDto,
+} from "./dto/planning-poker.dto";
 import { PlanningPokerEntity } from "./entities/planning-poker.entity";
 
 @Controller("planning-poker")
@@ -33,12 +36,11 @@ export class PlanningPokerController {
   }
 
   // Route pour mettre à jour un PlanningPoker
-  @Put("update/:id")
+  @Put("update")
   async update(
-    @Param("id") id: string,
-    @Body() updatePlanningPokerDto: PlanningPokerEntity,
+    @Body() updatePlanningPokerDto: UpdatePlanningPokerDto,
   ): Promise<PlanningPokerEntity> {
-    return this.planningPokerService.update(id, updatePlanningPokerDto);
+    return this.planningPokerService.update(updatePlanningPokerDto);
   }
 
   // Route pour supprimer un PlanningPoker
