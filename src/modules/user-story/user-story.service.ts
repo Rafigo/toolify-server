@@ -53,17 +53,27 @@ export class UserStoryService {
   async update(
     updateUserStoryDto: UpdateUserStoryDto,
   ): Promise<UserStoryEntity> {
-    await this.userStoryRepository.update(
-      updateUserStoryDto.id,
-      updateUserStoryDto,
-    );
-    return this.userStoryRepository.findOne({
+    const userStory = await this.userStoryRepository.findOne({
       where: { id: updateUserStoryDto.id },
     });
+
+    if (!userStory) {
+      throw new NotFoundException(
+        `UserStory with ID ${updateUserStoryDto.id} not found`,
+      );
+    }
+
+    Object.assign(userStory, updateUserStoryDto);
+
+    return this.userStoryRepository.save(userStory);
   }
 
   // Supprimer un PlanningPoker
   async remove(id: string): Promise<void> {
-    await this.userStoryRepository.delete(id);
+    const result = await this.userStoryRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`UserStory with ID ${id} not found`);
+    }
   }
 }

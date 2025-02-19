@@ -8,10 +8,10 @@ export class UserStoryEntity extends TimestampEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ type: "varchar", length: 255 })
+  @Column({ type: "varchar", length: 255, default: "" })
   title: string;
 
-  @Column({ type: "varchar", length: 255, nullable: true })
+  @Column({ type: "varchar", length: 255, nullable: true, default: "" })
   description: string;
 
   @Column({
@@ -21,10 +21,15 @@ export class UserStoryEntity extends TimestampEntity {
   })
   status: string;
 
-  @Column({ type: "varchar", length: 255, nullable: true })
+  @Column({
+    type: "varchar",
+    length: 255,
+    nullable: true,
+    default: "0",
+  })
   value: string;
 
-  @Column({ type: "varchar", length: 255, nullable: true })
+  @Column({ type: "varchar", length: 255, nullable: true, default: "0" })
   rank: string;
 
   @ManyToOne(
