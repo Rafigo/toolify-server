@@ -15,5 +15,5 @@ export class TimestampEntity {
   updatedAt: Date;
 
   @DeleteDateColumn({ type: "timestamp", nullable: true })
-  deleteAt: Date;
+  deletedAt: Date;
 }

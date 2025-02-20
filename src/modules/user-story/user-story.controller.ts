@@ -27,6 +27,15 @@ export class UserStoryController {
     return await this.userStoryService.findAll();
   }
 
+  @Get("by-planning-poker/:planningPokerId")
+  async findAllByPlanningPokerId(
+    @Param("planningPokerId") planningPokerId: string,
+  ): Promise<UserStoryEntity[]> {
+    return await this.userStoryService.findUserStoriesByPlanningPokerId(
+      planningPokerId,
+    );
+  }
+
   @Get("find-one/:id")
   async findOne(@Param("id") id: string): Promise<UserStoryEntity> {
     return await this.userStoryService.findOne(id);
@@ -44,5 +53,13 @@ export class UserStoryController {
   @Delete("delete/:id")
   async remove(@Param("id") id: string): Promise<void> {
     return this.userStoryService.remove(id);
+  }
+
+  @Put("update-ranks")
+  async updateRanks(
+    @Body() userStories: { userStoryId: string; rank: string }[],
+  ): Promise<{ message: string }> {
+    await this.userStoryService.updateRanks(userStories);
+    return { message: "Ranks updated successfully" };
   }
 }

@@ -25,6 +25,7 @@ export class PlanningPokerService {
     return this.planningPokerRepository.findOne({
       where: { id },
       relations: { userStories: true },
+      order: { userStories: { rank: "ASC" } },
     });
   }
 

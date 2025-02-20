@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { TimestampEntity } from "@/shared/generics-entities/timestamp.generic-entity";
 import { EnumUserStoryStatus } from "../enum/user-story.enum";
 import { PlanningPokerEntity } from "@/modules/planning-poker/entities/planning-poker.entity";
@@ -29,7 +35,7 @@ export class UserStoryEntity extends TimestampEntity {
   })
   value: string;
 
-  @Column({ type: "varchar", length: 255, nullable: true, default: "0" })
+  @Column({ type: "varchar", length: 255, nullable: true })
   rank: string;
 
   @ManyToOne(
@@ -39,5 +45,6 @@ export class UserStoryEntity extends TimestampEntity {
       onDelete: "CASCADE",
     },
   )
+  @JoinColumn({ name: "planning_poker_id" })
   planningPoker: PlanningPokerEntity;
 }
